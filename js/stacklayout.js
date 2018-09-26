@@ -10,7 +10,6 @@
 
     var _props = function($stacklayout) {
         if ($stacklayout.is('.stacklayout-horizontal')) {
-            console.log($stacklayout.width());
             return {
                 scrollfn: 'scrollLeft',
                 step: $stacklayout.width()
