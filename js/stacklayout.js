@@ -49,8 +49,7 @@
     Stacklayout.prototype.current = function() {
         var $stacklayout = this.$stacklayout;
         var index = $stacklayout.data('stacklayout-index');
-        var $panel = $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')');
-        return $panel;
+        return $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')');
     };
 
     Stacklayout.prototype.switch = function(element, callback) {
