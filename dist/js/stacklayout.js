@@ -10,6 +10,7 @@
 
     var _props = function($stacklayout) {
         if ($stacklayout.is('.stacklayout-horizontal')) {
+            console.log($stacklayout.width());
             return {
                 scrollfn: 'scrollLeft',
                 step: $stacklayout.width()
@@ -39,6 +40,14 @@
         $stacklayout.data('stacklayout-index', index);
         var props = _props($stacklayout);
         $stacklayout[props.scrollfn](index * props.step);
+        return stacklayout;
+    };
+
+    stacklayout.current = function($stacklayout) {
+        $stacklayout = $($stacklayout);
+        var index = $stacklayout.data('stacklayout-index');
+        var $panel = $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')');
+        return $panel;
     };
 
     stacklayout.switch = function($stacklayout, element, callback) {
@@ -59,30 +68,31 @@
         var properties = {};
         properties[props.scrollfn] = index * props.step;
         $stacklayout.animate(properties, callback);
+        return stacklayout.current();
     };
 
     stacklayout.next = function($stacklayout, callback) {
         $stacklayout = $($stacklayout);
         var index = $stacklayout.data('stacklayout-index');
-        stacklayout.switch($stacklayout, index + 1, callback);
+        return stacklayout.switch($stacklayout, index + 1, callback);
     };
 
     stacklayout.prev = function($stacklayout, callback) {
         $stacklayout = $($stacklayout);
         var index = $stacklayout.data('stacklayout-index');
-        stacklayout.switch($stacklayout, index - 1, callback);
+        return stacklayout.switch($stacklayout, index - 1, callback);
     };
 
     stacklayout.push = function($stacklayout, $content) {
         $stacklayout = $($stacklayout);
         var count = $stacklayout.find('> .stacklayout-panel').length;
-        stacklayout.insert($stacklayout, $content, count);
+        return stacklayout.insert($stacklayout, $content, count);
     };
 
     stacklayout.pop = function($stacklayout) {
         $stacklayout = $($stacklayout);
         var count = $stacklayout.find('> .stacklayout-panel').length;
-        stacklayout.remove($stacklayout, count - 1);
+        return stacklayout.remove($stacklayout, count - 1);
     };
 
     stacklayout.insert = function($stacklayout, $content, element) {
@@ -107,7 +117,7 @@
             $stacklayout.data('stacklayout-index', $stacklayout.data('stacklayout-index') + 1);
             $stacklayout[props.scrollfn]($stacklayout.data('stacklayout-index') * props.step);
         }
-        stacklayout.switch($stacklayout, index);
+        return stacklayout.switch($stacklayout, index);
     };
 
     stacklayout.remove = function($stacklayout, element) {
@@ -115,7 +125,7 @@
         var index = _index(element);
         var count = $stacklayout.find('> .stacklayout-panel').length;
         if (index < 0 || index >= count) {
-            return;
+            return stacklayout;
         }
         var do_remove = function() {
             var $panel = $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')');
@@ -137,6 +147,7 @@
         } else {
             do_remove();
         }
+        return stacklayout;
     };
 
     return stacklayout;
