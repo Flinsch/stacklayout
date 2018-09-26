@@ -45,8 +45,7 @@
     stacklayout.current = function($stacklayout) {
         $stacklayout = $($stacklayout);
         var index = $stacklayout.data('stacklayout-index');
-        var $panel = $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')');
-        return $panel;
+        return $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')');
     };
 
     stacklayout.switch = function($stacklayout, element, callback) {
@@ -67,7 +66,7 @@
         var properties = {};
         properties[props.scrollfn] = index * props.step;
         $stacklayout.animate(properties, callback);
-        return stacklayout.current();
+        return stacklayout.current($stacklayout);
     };
 
     stacklayout.next = function($stacklayout, callback) {
