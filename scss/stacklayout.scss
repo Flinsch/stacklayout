@@ -1,0 +1,25 @@
+
+.stacklayout {
+  display: flex;
+  overflow-x: hidden;
+  width: 100%;
+
+  > .stacklayout-panel {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  &.stacklayout-horizontal {
+    flex-wrap: nowrap;
+
+    > .stacklayout-panel {
+    }
+  }
+  &.stacklayout-vertical {
+    flex-wrap: wrap;
+
+    > .stacklayout-panel {
+      height: 100%;
+    }
+  }
+}

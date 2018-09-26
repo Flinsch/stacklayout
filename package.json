@@ -1,0 +1,38 @@
+{
+  "name": "stacklayout",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "stacklayout",
+    "scroll",
+    "horizontal",
+    "vertical",
+    "jQuery"
+  ],
+  "author": "Flinsch <flinsch@gmx.net>",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/Flinsch/stacklayout.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/Flinsch/stacklayout",
+  "bugs": "https://github.com/Flinsch/stacklayout/issues",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/stacklayout.js",
+  "dependencies": {
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^3.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-qunit": "^3.0.1",
+    "grunt-contrib-uglify": "^3.4.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-sass": "^3.0.1",
+    "node-sass": "^4.9.3"
+  }
+}
