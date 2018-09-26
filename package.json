@@ -1,6 +1,6 @@
 {
   "name": "stacklayout",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "keywords": [
     "stacklayout",
@@ -22,7 +22,7 @@
     "scss/**/*",
     "dist/**/*"
   ],
-  "main": "dist/stacklayout.js",
+  "main": "dist/js/stacklayout.js",
   "dependencies": {
     "jquery": "^3.3.1"
   },
