@@ -3,14 +3,17 @@
     if (typeof module === 'object' && typeof module.exports === 'object') {
         module.exports = factory(require('jquery'));
     } else {
-        window.stacklayout = factory(jQuery);
+        window.Stacklayout = factory(jQuery);
     }
 })(function($) {
-    var stacklayout = {};
+    var Stacklayout = function($stacklayout, element) {
+        this.$stacklayout = $stacklayout;
+
+        this.init(element);
+    };
 
     var _props = function($stacklayout) {
         if ($stacklayout.is('.stacklayout-horizontal')) {
-            console.log($stacklayout.width());
             return {
                 scrollfn: 'scrollLeft',
                 step: $stacklayout.width()
@@ -34,24 +37,24 @@
         }
     };
 
-    stacklayout.init = function($stacklayout, element) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.init = function(element) {
+        var $stacklayout = this.$stacklayout;
         var index = _index(element);
         $stacklayout.data('stacklayout-index', index);
         var props = _props($stacklayout);
         $stacklayout[props.scrollfn](index * props.step);
-        return stacklayout;
+        return this;
     };
 
-    stacklayout.current = function($stacklayout) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.current = function() {
+        var $stacklayout = this.$stacklayout;
         var index = $stacklayout.data('stacklayout-index');
         var $panel = $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')');
         return $panel;
     };
 
-    stacklayout.switch = function($stacklayout, element, callback) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.switch = function(element, callback) {
+        var $stacklayout = this.$stacklayout;
         var index = _index(element);
         var count = $stacklayout.find('> .stacklayout-panel').length;
         if (count > 0) {
@@ -68,35 +71,35 @@
         var properties = {};
         properties[props.scrollfn] = index * props.step;
         $stacklayout.animate(properties, callback);
-        return stacklayout.current();
+        return this.current();
     };
 
-    stacklayout.next = function($stacklayout, callback) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.next = function(callback) {
+        var $stacklayout = this.$stacklayout;
         var index = $stacklayout.data('stacklayout-index');
-        return stacklayout.switch($stacklayout, index + 1, callback);
+        return this.switch(index + 1, callback);
     };
 
-    stacklayout.prev = function($stacklayout, callback) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.prev = function(callback) {
+        var $stacklayout = this.$stacklayout;
         var index = $stacklayout.data('stacklayout-index');
-        return stacklayout.switch($stacklayout, index - 1, callback);
+        return this.switch(index - 1, callback);
     };
 
-    stacklayout.push = function($stacklayout, $content) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.push = function($content) {
+        var $stacklayout = this.$stacklayout;
         var count = $stacklayout.find('> .stacklayout-panel').length;
-        return stacklayout.insert($stacklayout, $content, count);
+        return this.insert($content, count);
     };
 
-    stacklayout.pop = function($stacklayout) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.pop = function() {
+        var $stacklayout = this.$stacklayout;
         var count = $stacklayout.find('> .stacklayout-panel').length;
-        return stacklayout.remove($stacklayout, count - 1);
+        return this.remove(count - 1);
     };
 
-    stacklayout.insert = function($stacklayout, $content, element) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.insert = function($content, element) {
+        var $stacklayout = this.$stacklayout;
         var index = _index(element);
         var count = $stacklayout.find('> .stacklayout-panel').length;
         if (index < 0) {
@@ -117,15 +120,15 @@
             $stacklayout.data('stacklayout-index', $stacklayout.data('stacklayout-index') + 1);
             $stacklayout[props.scrollfn]($stacklayout.data('stacklayout-index') * props.step);
         }
-        return stacklayout.switch($stacklayout, index);
+        return this.switch(index);
     };
 
-    stacklayout.remove = function($stacklayout, element) {
-        $stacklayout = $($stacklayout);
+    Stacklayout.prototype.remove = function(element) {
+        var $stacklayout = this.$stacklayout;
         var index = _index(element);
         var count = $stacklayout.find('> .stacklayout-panel').length;
         if (index < 0 || index >= count) {
-            return stacklayout;
+            return this;
         }
         var do_remove = function() {
             var $panel = $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')');
@@ -138,17 +141,17 @@
         };
         if (index === $stacklayout.data('stacklayout-index')) {
             if (index + 1 < count) {
-                stacklayout.switch($stacklayout, index + 1, do_remove);
+                this.switch(index + 1, do_remove);
             } else if (index > 0) {
-                stacklayout.switch($stacklayout, index - 1, do_remove);
+                this.switch(index - 1, do_remove);
             } else {
                 do_remove();
             }
         } else {
             do_remove();
         }
-        return stacklayout;
+        return this;
     };
 
-    return stacklayout;
+    return Stacklayout;
 });
