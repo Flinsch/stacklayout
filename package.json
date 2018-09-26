@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Flinsch/stacklayout",
   "bugs": "https://github.com/Flinsch/stacklayout/issues",
   "files": [
+    "js/**/*",
+    "scss/**/*",
     "dist/**/*"
   ],
   "main": "dist/stacklayout.js",
