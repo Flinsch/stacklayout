@@ -7,6 +7,17 @@
 .stacklayout > .stacklayout-panel {
   flex: 0 0 auto;
   width: 100%;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.stacklayout > .stacklayout-panel.current {
+  opacity: 1;
+  visibility: visible;
+}
+
+.stacklayout > .stacklayout-panel:not(.current) {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .stacklayout.stacklayout-horizontal {

@@ -70,6 +70,8 @@
         var properties = {};
         properties[props.scrollfn] = index * props.step;
         $stacklayout.animate(properties, callback);
+        $stacklayout.find('> .stacklayout-panel:not(:nth-child('+(index+1)+'))').removeClass('current');
+        $stacklayout.find('> .stacklayout-panel:nth-child('+(index+1)+')').addClass('current');
         return this.current();
     };
 
